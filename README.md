@@ -4,7 +4,7 @@ This is a simple demo for Apache HttpClient To call HTTPS pattern URI.
 
 # Main Class Based on Apache HttpClient
 
-Using UsefulHttpClient.java can implement HTTP & HTTPS Request！
+Using PerfectHttpClient.java and UsefulHttpClient.java can implement HTTP & HTTPS Request！
 
 #Apache HttpClient
 
