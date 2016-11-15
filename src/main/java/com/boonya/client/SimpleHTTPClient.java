@@ -5,9 +5,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -15,14 +14,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import com.alibaba.fastjson.JSONObject;
 
@@ -37,7 +35,13 @@ import com.alibaba.fastjson.JSONObject;
  */
 @SuppressWarnings("deprecation")
 public class SimpleHTTPClient {
-
+	
+	
+	// 请求枚举类型
+	public enum Type {
+		GET,POST
+	}
+	
 	// 接口地址
 	private String apiURL = "";
 
@@ -45,7 +49,9 @@ public class SimpleHTTPClient {
 
 	private Log logger = LogFactory.getLog(this.getClass());
 
-	private HttpPost method = null;
+	private HttpPost methodPost = null;
+	
+	private HttpGet methodGet = null;
 
 	private long startTime = 0L;
 
@@ -61,7 +67,7 @@ public class SimpleHTTPClient {
 	 * @throws
 	 */
 	private void initHttps() {
-		// ========================设置忽略访问SSL===================
+		// ==设置忽略访问SSL==
 		// 创建TrustManager
 		X509TrustManager xtm = new X509TrustManager() {
 			public void checkClientTrusted(X509Certificate[] chain,
@@ -81,7 +87,6 @@ public class SimpleHTTPClient {
 		try {
 			ctx = SSLContext.getInstance("SSL");
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -89,7 +94,6 @@ public class SimpleHTTPClient {
 		try {
 			ctx.init(null, new TrustManager[] { xtm }, null);
 		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -107,12 +111,7 @@ public class SimpleHTTPClient {
 	public SimpleHTTPClient(String url) {
 		this.apiURL = url;
 		httpClient = new DefaultHttpClient();
-		method = new HttpPost(apiURL);
-		method.setHeader("Accept", "application/json");
-		method.setHeader("Accpet-Encoding", "gzip");
-		method.setHeader("Content-Encoding", "UTF-8");
-		method.setHeader("Content-Type", "application/json; charset=UTF-8");
-		method.setHeader("Sequence", UUID.randomUUID().toString());
+		setMethodPost();
 		// 设置忽略访问SSL
 		initHttps();
 	}
@@ -126,16 +125,44 @@ public class SimpleHTTPClient {
 	public SimpleHTTPClient(String url, String uuid) {
 		apiURL = url;
 		httpClient = new DefaultHttpClient();
-		method = new HttpPost(apiURL);
-		method.setHeader("Accept", "application/json");
-		method.setHeader("Accpet-Encoding", "gzip");
-		method.setHeader("Content-Encoding", "UTF-8");
-		method.setHeader("Content-Type", "application/json; charset=UTF-8");
-		method.setHeader("Sequence", uuid);
+		setMethodPost(uuid);
 		// 设置忽略访问SSL
 		initHttps();
 	}
-
+	
+	/**
+	 * 设置Post方法
+	 * 
+	 * @MethodName: setMethodPost
+	 * @Description: 
+	 * @throws
+	 */
+	private void setMethodPost(){
+		methodPost = new HttpPost(apiURL);
+		methodPost.setHeader("Accept", "application/json");
+		methodPost.setHeader("Accpet-Encoding", "gzip");
+		methodPost.setHeader("Content-Encoding", "UTF-8");
+		methodPost.setHeader("Content-Type", "application/json; charset=UTF-8");
+		methodPost.setHeader("Sequence",  UUID.randomUUID().toString());
+	}
+	
+	/**
+	 * 设置Post方法
+	 * 
+	 * @MethodName: setMethodPost 
+	 * @Description: 
+	 * @param uuid
+	 * @throws
+	 */
+	private void setMethodPost(String uuid){
+		methodGet = new HttpGet(apiURL);
+		methodGet.setHeader("Accept", "application/json");
+		methodGet.setHeader("Accpet-Encoding", "gzip");
+		methodGet.setHeader("Content-Encoding", "UTF-8");
+		methodGet.setHeader("Content-Type", "application/json; charset=UTF-8");
+		methodGet.setHeader("Sequence", uuid);
+	}
+	
 	/**
 	 * 调用 API
 	 * 
@@ -146,27 +173,21 @@ public class SimpleHTTPClient {
 		String body = null;
 		logger.info("parameters:" + parameters);
 
-		if (method != null & parameters != null
+		if (methodPost != null & parameters != null
 				&& !"".equals(parameters.trim())) {
 			JSONObject jsonObject = JSONObject.parseObject(parameters);
 			logger.info("json:" + jsonObject.toString());
 			try {
-
-				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				// 建立一个NameValuePair数组，用于存储欲传送的参数
-				params.add(new BasicNameValuePair("data", parameters));
-
 				StringEntity entity = new StringEntity(parameters, "UTF-8");
+				// 设置数据交付方式
+				entity.setContentType("application/json");
 				// 添加参数
-				method.setEntity(entity/*
-										 * new UrlEncodedFormEntity(params,
-										 * "UTF-8")
-										 */);
+				methodPost.setEntity(entity);
 
 				startTime = System.currentTimeMillis();
 
 				// 设置编码
-				HttpResponse response = httpClient.execute(method);
+				HttpResponse response = httpClient.execute(methodPost);
 				endTime = System.currentTimeMillis();
 				int statusCode = response.getStatusLine().getStatusCode();
 				logger.info("statusCode:" + statusCode);
@@ -175,7 +196,6 @@ public class SimpleHTTPClient {
 					logger.error("Method failed:" + response.getStatusLine());
 					status = 1;
 				}
-
 				// Read the response body
 				body = EntityUtils.toString(response.getEntity());
 
