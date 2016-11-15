@@ -8,10 +8,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.annotation.ThreadSafe;
 import org.apache.http.client.ClientProtocolException;
@@ -23,10 +29,13 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 @ThreadSafe
 @SuppressWarnings("deprecation")
 public class UsefulHttpClient{
+	
+	private Log logger = LogFactory.getLog(this.getClass());
 	
 	private  HttpClient httpClient = null;// 普通HTTP访问
 	
@@ -100,12 +109,22 @@ public class UsefulHttpClient{
 	}
 	
 	
-	public void post(String url,String requestBody){
+	public String post(String url,String requestBody){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -113,14 +132,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,String requestBody,String charset){
+	public String post(String url,String requestBody,String charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody,charset);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -128,14 +158,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,String requestBody,Charset charset){
+	public String post(String url,String requestBody,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody,charset);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -143,14 +184,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,String requestBody,ContentType contentType){
+	public String post(String url,String requestBody,ContentType contentType){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody, contentType);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -158,15 +210,26 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@Deprecated
-	public void post(String url,String requestBody,String mimeType,String charset){
+	public String post(String url,String requestBody,String mimeType,String charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody, mimeType, charset);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -174,14 +237,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,List<NameValuePair> parameters){
+	public String post(String url,List<NameValuePair> parameters){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -189,14 +263,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,List<NameValuePair> parameters,Charset charset){
+	public String post(String url,List<NameValuePair> parameters,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters, charset);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -204,14 +289,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,Iterable<NameValuePair> parameters){
+	public String post(String url,Iterable<NameValuePair> parameters){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -219,14 +315,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void post(String url,Iterable<NameValuePair> parameters,Charset charset){
+	public String post(String url,Iterable<NameValuePair> parameters,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters, charset);
 			post.setEntity(entity);
-			httpClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -234,14 +341,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,String requestBody){
+	public String postSSL(String url,String requestBody){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -249,14 +367,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,String requestBody,String charset){
+	public String postSSL(String url,String requestBody,String charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody,charset);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -264,14 +393,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,String requestBody,Charset charset){
+	public String postSSL(String url,String requestBody,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody,charset);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -279,14 +419,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,String requestBody,ContentType contentType){
+	public String postSSL(String url,String requestBody,ContentType contentType){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody, contentType);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -294,15 +445,26 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@Deprecated
-	public void postSSL(String url,String requestBody,String mimeType,String charset){
+	public String postSSL(String url,String requestBody,String mimeType,String charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			HttpEntity entity=new StringEntity(requestBody, mimeType, charset);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -310,14 +472,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,List<NameValuePair> parameters){
+	public String postSSL(String url,List<NameValuePair> parameters){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -325,14 +498,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,List<NameValuePair> parameters,Charset charset){
+	public String postSSL(String url,List<NameValuePair> parameters,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters, charset);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -340,14 +524,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,Iterable<NameValuePair> parameters){
+	public String postSSL(String url,Iterable<NameValuePair> parameters){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -355,14 +550,25 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void postSSL(String url,Iterable<NameValuePair> parameters,Charset charset){
+	public String postSSL(String url,Iterable<NameValuePair> parameters,Charset charset){
 		HttpPost post=new HttpPost(url);
 		try {
 			UrlEncodedFormEntity entity=new UrlEncodedFormEntity(parameters, charset);
 			post.setEntity(entity);
-			httpsClient.execute(post);
+			long startTime = System.currentTimeMillis();
+			// 设置编码
+			HttpResponse response = httpsClient.execute(post);
+			long endTime = System.currentTimeMillis();
+			int statusCode = response.getStatusLine().getStatusCode();
+			logger.info("statusCode:" + statusCode);
+			logger.info("调用API 花费时间(单位：毫秒)：" + (endTime - startTime));
+			if (statusCode != HttpStatus.SC_OK) {
+				logger.error("Method failed:" + response.getStatusLine());
+			}
+			return  EntityUtils.toString(response.getEntity());
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch ( ClientProtocolException e) {
@@ -370,6 +576,7 @@ public class UsefulHttpClient{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 }

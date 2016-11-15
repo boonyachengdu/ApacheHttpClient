@@ -112,7 +112,7 @@ public class KeystoreHTTPSClient {
             CloseableHttpResponse response = httpclient.execute(httpget);  
             try {  
                 HttpEntity entity = response.getEntity();  
-                System.out.println(response.getStatusLine());  
+                logger.info(response.getStatusLine());  
                 if (entity != null) {  
                 	logger.info("--------------------------------------");  
                 	logger.info("Response content length: " + entity.getContentLength());  
