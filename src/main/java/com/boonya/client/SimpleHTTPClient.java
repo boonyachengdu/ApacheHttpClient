@@ -45,7 +45,6 @@ public class SimpleHTTPClient {
 
 	private HttpPost methodPost = null;
 	
-
 	private long startTime = 0L;
 
 	private long endTime = 0L;
@@ -60,7 +59,9 @@ public class SimpleHTTPClient {
 	}
 
 	private SimpleHTTPClient() {
-		httpClient = new DefaultHttpClient();
+		if(httpClient==null){
+			httpClient = new DefaultHttpClient();
+		}
 	}
 	
 	/**
