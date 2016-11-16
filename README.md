@@ -48,5 +48,11 @@ Asynch HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on Htt
 
 Commons HttpClient 3.x codeline is at the end of life. All users of Commons HttpClient 3.x are strongly encouraged to upgrade to HttpClient 4.1. 
 
+#HttpCore Tutorial
 
+http://hc.apache.org/httpcomponents-core-ga/tutorial/html/index.html
+
+#WIKI
+
+https://wiki.apache.org/HttpComponents/
 
