@@ -1,29 +1,52 @@
-# Apache HttpClient Using by HTTP & HTTPS
+#About this repository 
 
 This is a simple demo for Apache HttpClient To call HTTPS pattern URI.
 
-# Main Class Based on Apache HttpClient
+#Official web-site is the best choice to learn HTTPClient 
 
-Using PerfectHttpClient.java and UsefulHttpClient.java can implement HTTP & HTTPS Request！
+http://hc.apache.org/
 
-#Apache HttpClient
 
-## End of life
+##Apache HttpComponents
 
-The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.
+The Apache HttpComponents™ project is responsible for creating and maintaining a toolset of low level Java components focused on HTTP and associated protocols.
 
-## Introduction
+This project functions under the Apache Software Foundation (http://www.apache.org), and is part of a larger community of developers and users.
 
+##HttpComponents Overview
 
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant protocol used on the Internet today. Web services, network-enabled appliances and the growth of network computing continue to expand the role of the HTTP protocol beyond user-driven web browsers, while increasing the number of applications that require HTTP support.
 
-Although the java.net package provides basic functionality for accessing resources via HTTP, it doesn't provide the full flexibility or functionality needed by many applications. The Jakarta Commons HttpClient component seeks to fill this void by providing an efficient, up-to-date, and feature-rich package implementing the client side of the most recent HTTP standards and recommendations. See the Features page for more details on standards compliance and capabilities.
+Designed for extension while providing robust support for the base HTTP protocol, the HttpComponents may be of interest to anyone building HTTP-aware client and server applications such as web browsers, web spiders, HTTP proxies, web service transport libraries, or systems that leverage or extend the HTTP protocol for distributed communication.
 
-Designed for extension while providing robust support for the base HTTP protocol, the HttpClient component may be of interest to anyone building HTTP-aware client applications such as web browsers, web service clients, or systems that leverage or extend the HTTP protocol for distributed communication.
+##HttpComponents Structure
 
-There are many projects that use HttpClient to provide the core HTTP functionality. Some of these are open source with project pages you can find on the web while others are closed source that you would never see or hear about. The Apache Source License provides maximum flexibility for source and binary reuse. Please see the Applications page for projects using HttpClient.
+###HttpComponents Core
 
-##History
+HttpCore is a set of low level HTTP transport components that can be used to build custom client and server side HTTP services with a minimal footprint. HttpCore supports two I/O models: blocking I/O model based on the classic Java I/O and non-blocking, event driven I/O model based on Java NIO.
 
-HttpClient was started in 2001 as a subproject of the Jakarta Commons, based on code developed by the Jakarta Slide project. It was promoted out of the Commons in 2004, graduating to a separate Jakarta project. In 2005, the HttpComponents project at Jakarta was created, with the task of developing a successor to HttpClient 3.x and to maintain the existing codebase until the new one is ready to take over. The Commons project, cradle of HttpClient, left Jakarta in 2007 to become an independent Top Level Project. Later in the same year, the HttpComponents project also left Jakarta to become an independent Top Level Project, taking the responsibility for maintaining HttpClient with it.
+The blocking I/O model may be more appropriate for data intensive, low latency scenarios, whereas the non-blocking model may be more appropriate for high latency scenarios where raw data throughput is less important than the ability to handle thousands of simultaneous HTTP connections in a resource efficient manner.
+
+    HttpCore Tutorial HTML / PDF
+    HttpCore Examples
+
+###HttpComponents Client
+
+HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore. It also provides reusable components for client-side authentication, HTTP state management, and HTTP connection management. HttpComponents Client is a successor of and replacement for Commons HttpClient 3.x. Users of Commons HttpClient are strongly encouraged to upgrade.
+
+    HttpClient Tutorial HTML / PDF
+    HttpClient Samples
+    HttpClient port for Android
+
+###HttpComponents AsyncClient
+
+Asynch HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on HttpCore NIO and HttpClient components. It is a complementary module to Apache HttpClient intended for special cases where ability to handle a great number of concurrent connections is more important than performance in terms of a raw data throughput.
+
+    HttpAsyncClient Samples
+
+###Commons HttpClient (legacy)
+
+Commons HttpClient 3.x codeline is at the end of life. All users of Commons HttpClient 3.x are strongly encouraged to upgrade to HttpClient 4.1. 
+
+
 

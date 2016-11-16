@@ -1,4 +1,4 @@
-package com.boonya.client;
+package com.boonya.http.client;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;

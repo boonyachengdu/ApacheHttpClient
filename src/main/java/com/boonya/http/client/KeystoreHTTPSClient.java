@@ -1,4 +1,4 @@
-package com.boonya.client;
+package com.boonya.http.client;
 
 import java.io.File;
 import java.io.FileInputStream;
