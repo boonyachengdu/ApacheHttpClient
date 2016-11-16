@@ -52,7 +52,7 @@ Commons HttpClient 3.x codeline is at the end of life. All users of Commons Http
 
 http://hc.apache.org/httpcomponents-core-ga/tutorial/html/index.html
 
-#Wiki of HttpClient
+#Wiki of HttpComponents
 
 https://wiki.apache.org/HttpComponents/
 
