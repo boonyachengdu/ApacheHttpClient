@@ -4,6 +4,10 @@
 	<groupId>com.boonya.client</groupId>
 	<artifactId>ApacheHttpClient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
+	    <jna.version>4.1.0</jna.version>
+	</properties>
 
 	<dependencies>
 
@@ -32,5 +36,15 @@
 		    <artifactId>junit</artifactId>
 		    <version>4.12</version>
 		</dependency>
+		  <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>${jna.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna-platform</artifactId>
+        <version>${jna.version}</version>
+      </dependency>
 	</dependencies>
 </project>
