@@ -2,7 +2,7 @@
 
 This is a simple demo for Apache HttpClient To call HTTPS pattern URI.
 
-#Official web-site is the best choice to learn HTTPClient 
+#To learn HTTPClient official web-site is the best choice  
 
 http://hc.apache.org/
 
@@ -52,7 +52,7 @@ Commons HttpClient 3.x codeline is at the end of life. All users of Commons Http
 
 http://hc.apache.org/httpcomponents-core-ga/tutorial/html/index.html
 
-#WIKI
+#Wiki of HttpClient
 
 https://wiki.apache.org/HttpComponents/
 
